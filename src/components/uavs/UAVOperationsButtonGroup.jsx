@@ -59,10 +59,10 @@ const UAVOperationsButtonGroup = ({
   size,
   startSeparator,
   mode,
+  debugString,
 }) => {
   const isSelectionEmpty = isEmpty(selectedUAVIds) && !broadcast;
   const isSelectionSingle = selectedUAVIds.length === 1 && !broadcast;
-
   const {
     flashLight,
     holdPosition,
@@ -229,7 +229,7 @@ const UAVOperationsButtonGroup = ({
         >
           <SportsEsports
             fontSize={fontSize}
-            htmlColor={isSelectionEmpty ? undefined : Colors.rc}
+            htmlColor={isSelectionEmpty ? undefined : (debugString == 'rc_cancel' ? Colors.rc2 : Colors.rc1) }
           />
         </IconButton>
       </Tooltip>

@@ -77,7 +77,7 @@ const UAVOperationsButtonGroup = ({
     wakeUp,
     modeLoiter,
     modeShow,
-    modeLand,
+    modeStab,
     rc,
   } = bindActionCreators(
     createUAVOperationThunks({
@@ -217,7 +217,7 @@ const UAVOperationsButtonGroup = ({
       >
         <MenuItem onClick={modeShow}>Show</MenuItem>
         <MenuItem onClick={modeLoiter}>Loiter</MenuItem>
-        <MenuItem onClick={modeLand}>Land</MenuItem>
+        <MenuItem onClick={modeStab}>Stabilize</MenuItem>
       </Menu>
     </div>
       </Tooltip>

@@ -200,12 +200,12 @@ export const changeModeShow = performMassOperation({
   }),
 });
 
-export const changeModeLand = performMassOperation({
+export const changeModeStab = performMassOperation({
   type: 'UAV-MODE',
   name: 'Mode command',
   mapper: (options) => ({
     ...options,
-    num: 9,
+    num: 0,
   }),
 });
 
@@ -230,7 +230,7 @@ const OPERATION_MAP = {
   wakeUp: wakeUpUAVs,
   modeLoiter: changeModeLoiter,
   modeShow: changeModeShow,
-  modeLand: changeModeLand,
+  modeStab: changeModeStab,
   rc: sendRC,
 };
 

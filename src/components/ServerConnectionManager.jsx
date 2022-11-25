@@ -492,7 +492,7 @@ const ServerConnectionManager = connect(
       // Let the user know that we are connected
       dispatch(
         showNotification({
-          message: 'Connected to Skybrush server',
+          message: 'Connected to FlyAI server',
           semantics: 'info',
         })
       );
@@ -509,7 +509,7 @@ const ServerConnectionManager = connect(
 
     onConnectionTimeout() {
       dispatch(setCurrentServerConnectionState(ConnectionState.DISCONNECTED));
-      dispatch(showError('Timeout while connecting to Skybrush server'));
+      dispatch(showError('Timeout while connecting to FlyAI server'));
     },
 
     onDisconnected(url, reason) {
@@ -522,7 +522,7 @@ const ServerConnectionManager = connect(
 
         switch (reason) {
           case 'io client disconnect':
-            dispatch(showNotification('Disconnected from Skybrush server'));
+            dispatch(showNotification('Disconnected from FlyAI server'));
             break;
 
           case 'io server disconnect':
@@ -532,12 +532,12 @@ const ServerConnectionManager = connect(
 
           case 'transport close':
             dispatch(
-              showError('Skybrush server closed connection unexpectedly')
+              showError('FlyAI server closed connection unexpectedly')
             );
             break;
 
           case 'ping timeout':
-            dispatch(showError('Connection to Skybrush server lost'));
+            dispatch(showError('Connection to FlyAI server lost'));
             break;
 
           default:
@@ -568,8 +568,8 @@ const ServerConnectionManager = connect(
 
     onLocalServerError(message, wasRunning) {
       const baseMessage = wasRunning
-        ? 'Skybrush server died unexpectedly'
-        : 'Failed to launch local Skybrush server';
+        ? 'FlyAI server died unexpectedly'
+        : 'Failed to launch local FlyAI server';
       dispatch(setCurrentServerConnectionState(ConnectionState.DISCONNECTED));
       dispatch(showError(message ? `${baseMessage}: ${message}` : baseMessage));
     },

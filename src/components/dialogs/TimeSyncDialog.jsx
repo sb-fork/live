@@ -98,7 +98,7 @@ const TimeSyncDialogBodyWhenClocksAreInSync = ({ clockSkew }) => {
     <DialogContent className={classes.content}>
       <Box my={2}>
         <DialogContentText>
-          The internal clock of your device and the clock of the Skybrush server
+          The internal clock of your device and the clock of the FlyAI server
           are now in sync:
         </DialogContentText>
       </Box>
@@ -119,7 +119,7 @@ const TimeSyncDialogBodyWhenClocksAreNotInSync = ({ clockSkew }) => {
         <Typography variant='h6'>Why am I seeing this warning?</Typography>
       </Box>
       <DialogContentText>
-        The internal clock of your device and the clock of the Skybrush server
+        The internal clock of your device and the clock of the FlyAI server
         you have connected to are not in sync:
       </DialogContentText>
       <ServerAndClientClockComparison clockSkew={clockSkew} />

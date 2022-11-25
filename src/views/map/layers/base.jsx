@@ -158,17 +158,27 @@ const LayerSourcePresentation = ({ apiKeys, tileLoadFunction, type }) => {
         />
       );
 
-    case Source.MAPTILER.SATELLITE:
-      // This tile source does not seem to have a @2x version
+      case Source.MAPTILER.TOPO:
       return (
         <source.XYZ
           tileLoadFunction={tileLoadFunction}
+          tilePixelRatio={2}
           tileSize={512}
-          url={`https://api.maptiler.com/tiles/satellite-v2/{z}/{x}/{y}.jpg?key=${apiKeys.MAPTILER}`}
+          url={`https://api.maptiler.com/maps/topo-v2/{z}/{x}/{y}.png?key=${apiKeys.MAPTILER}`}
         />
       );
 
-    case Source.MAPTILER.STREETS:
+      case Source.MAPTILER.OSM:
+      return (
+        <source.XYZ
+          tileLoadFunction={tileLoadFunction}
+          tilePixelRatio={2}
+          tileSize={512}
+          url={`https://api.maptiler.com/maps/openstreetmap/{z}/{x}/{y}@2x.jpg?key=${apiKeys.MAPTILER}`}
+        />
+      );
+
+      case Source.MAPTILER.STREETS:
       return (
         <source.XYZ
           tileLoadFunction={tileLoadFunction}
@@ -177,7 +187,7 @@ const LayerSourcePresentation = ({ apiKeys, tileLoadFunction, type }) => {
           url={`https://api.maptiler.com/maps/streets/{z}/{x}/{y}@2x.png?key=${apiKeys.MAPTILER}`}
         />
       );
-
+   
     case Source.NEXTZEN:
       // TODO(ntamas): this is not quite ready; the Mapbox styling function does
       // not work for it and we don't have a Nextzen-specific styling function

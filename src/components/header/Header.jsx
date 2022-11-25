@@ -30,8 +30,11 @@ import BatteryStatusHeaderButton from '~/features/uavs/BatteryStatusHeaderButton
 import WeatherHeaderButton from '~/features/weather/WeatherHeaderButton';
 import { hasFeature } from '~/utils/configuration';
 
+
+import logo from '~/../assets/icons/flyai_logo_webside_2.png';
+
 const style = {
-  backgroundColor: '#333',
+  backgroundColor: '#000',
   flexGrow: 0,
   minHeight: 48,
 };
@@ -82,6 +85,15 @@ const Header = ({ isSidebarOpen, sessionExpiresAt, toggleSidebar }) => (
         shape={isSidebarOpen ? 'close' : 'menu'}
         onClick={toggleSidebar}
       />
+      <Box // FlyAI logo
+        component="img"
+        sx={{
+          height: 50,
+          width: 100,
+        }}
+        src={logo}
+      >
+      </Box>
       <Box flexGrow={1} flexShrink={1}>
         {/* spacer */}
       </Box>

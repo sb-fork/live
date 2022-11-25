@@ -31,20 +31,20 @@ import NearestItemTooltip from '~/features/session/NearestItemTooltip';
 import { setFeatureIdForTooltip } from '~/features/session/slice';
 import mapViewManager from '~/mapViewManager';
 import {
-  createFeatureFromOpenLayers,
-  isFeatureTransformable,
-} from '~/model/features';
-import {
   canLayerTriggerTooltip,
   getVisibleSelectableLayers,
   isLayerSelectable,
 } from '~/model/layers';
-import { handleFeatureUpdatesInOpenLayers } from '~/model/mutations';
+import {
+  createFeatureFromOpenLayers,
+  handleFeatureUpdatesInOpenLayers,
+  isFeatureTransformable,
+} from '~/model/openlayers';
 import { updateMapViewSettings } from '~/features/map/view';
 import {
-  addFeaturesToSelection,
-  setSelectedFeatures,
-  removeFeaturesFromSelection,
+  addToSelection,
+  setSelection,
+  removeFromSelection,
 } from '~/features/map/selection';
 import { getVisibleLayersInOrder } from '~/selectors/ordered';
 import { getExtendedCoordinateFormatter } from '~/selectors/formatting';
@@ -440,6 +440,7 @@ class MapViewPresentation extends React.Component {
         center={mapViewCoordinateFromLonLat(center)}
         rotation={(-rotation * Math.PI) / 180}
         zoom={zoom}
+        maxZoom={24}
         constrainRotation={false}
       />
     );
@@ -647,13 +648,13 @@ class MapViewPresentation extends React.Component {
    */
   _onFeaturesSelected = (mode, features) => {
     const actionMapping = {
-      add: addFeaturesToSelection,
-      remove: removeFeaturesFromSelection,
-      set: setSelectedFeatures,
+      add: addToSelection,
+      remove: removeFromSelection,
+      set: setSelection,
     };
-    const action = actionMapping[mode] || setSelectedFeatures;
+    const action = actionMapping[mode] || setSelection;
     const ids = features ? features.map((feature) => feature.getId()) : [];
-    if (action === setSelectedFeatures || (ids && ids.length > 0)) {
+    if (action === setSelection || (ids && ids.length > 0)) {
       this.props.dispatch(action(ids));
     }
   };

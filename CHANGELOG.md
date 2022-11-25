@@ -5,18 +5,69 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## Unreleased
+
+### Added
+
+- Enable multi-window support by making panels detachable from the main layout.
+
+## [2.6.0] - 2022-10-20
+
+### Added
+
+- UAV trajectories shown on the map now have arrowheads at the start and end
+  coordinates.
+
+### Fixed
+
+- Empty mission slots can now be selected and the map view will show the
+  corresponding trajectory even if no drone is assigned to the slot yet.
+
+## [2.5.0] - 2022-09-05
 
 ### Added
 
 - During the show upload process, you can now flash the LED lights of the
-  drones for which the upload failed automatically. This feature, combined with
+  drones automatically upon an upload failure. This feature, combined with
   the automatic retry feature, is helpful in identifying drones on the field
   that are struggling with the show upload due to poor wifi reception.
-  
+
+### Changed
+
+- The maximum zoom level of the map view is now limited to zoom level 24 to
+  prevent the app from zooming in way too closely to a single drone when the
+  "Fit to drones" button is pressed with a single drone only.
+
+- Implemented several tweaks to the automatic show coordinate system fitting
+  algorithm to make it work better in real situations on the field.
+
+- The "Clear current fence" button in the "Setup geofence" dialog now also
+  removes the fence polygon from the map instead of simply converting it to
+  an ordinary polygon.
+
+- The broadcast switch was moved from the UAV toolbar to the header and now it
+  can also be triggered with a hotkey (Ctrl-B on Windows and Linux, Cmd-B on
+  macOS).
+
+- The graticule layer (the latitude-longitude grid overlaid on top of the map)
+  now adjusts itself to the preferred coordinate format; in other words, if
+  Skybrush is configured to show latitudes and longitudes using degrees,
+  minutes and seconds, then the graticule itself will also try to ensure that
+  the lines align with whole degrees, minutes and seconds.
+
 ### Fixed
 
-- Show file change detection (only available in the electron version) now works
+- Fixed a bug where the RTK correction message age counters were not updated
+  correctly.
+
+## [2.4.1] - 2022-07-30
+
+### Fixed
+
+- Fixed incorrect validation of the longitude field in the location editor
+  dialog box.
+
+- Show file change detection (only available in the desktop version) now works
   even while the _"Show control"_ panel is not active.
 
 ## [2.4.0] - 2022-07-21
@@ -140,6 +191,9 @@ licensed under the GNU GPLv3. There are no breaking changes in this version.
 
 - Fixed the termination of the server process on macOS when the server is
   launched automatically by Skybrush Live.
+
+- Fixed a bug that sometimes prevented workbench panels from being rendered
+  correctly when they were freshly dragged off from the sidebar.
 
 ## [1.27.2] - 2021-03-23
 

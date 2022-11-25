@@ -1,6 +1,7 @@
 import createColor from 'color';
 import unary from 'lodash-es/unary';
 import PropTypes from 'prop-types';
+import { MultiPoint } from 'ol/geom';
 import { Circle, Style, Text } from 'ol/style';
 import React, { useCallback, useRef } from 'react';
 import { connect } from 'react-redux';
@@ -9,9 +10,11 @@ import { Feature, geom, interaction, layer, source } from '@collmot/ol-react';
 
 import { Tool } from '../tools';
 
+import { getGeofencePolygonId } from '~/features/mission/selectors';
+
 import { FeatureType, LabelStyle } from '~/model/features';
 import { featureIdToGlobalId } from '~/model/identifiers';
-import { handleFeatureUpdatesInOpenLayers } from '~/model/mutations';
+import { handleFeatureUpdatesInOpenLayers } from '~/model/openlayers';
 import { setLayerEditable, setLayerSelectable } from '~/model/layers';
 import { getFeaturesInOrder } from '~/selectors/ordered';
 import { getSelectedFeatureIds } from '~/selectors/selection';
@@ -29,10 +32,12 @@ import {
   dashedThickOutline,
 } from '~/utils/styles';
 
-import { getGeofencePolygonId } from '~/features/mission/selectors';
-
 // === Helper functions ===
 
+/**
+ * Returns an OpenLayers geometry representation of the given _Redux_
+ * feature, using ol-react tags.
+ */
 const geometryForFeature = (feature) => {
   const { points, type } = feature;
   const coordinates = points.map(unary(mapViewCoordinateFromLonLat));
@@ -74,6 +79,30 @@ const labelStrokes = {
   [LabelStyle.THICK_OUTLINE]: whiteThickOutline,
 };
 
+const extractPointsFromLineString = (feature) =>
+  new MultiPoint(feature.getGeometry().getCoordinates());
+const extractPointsFromPolygon = (feature) =>
+  new MultiPoint(feature.getGeometry().getCoordinates()[0]);
+
+const styleForPointsOfLineString = (feature, selected, color) =>
+  new Style({
+    image: new Circle({
+      stroke: selected ? whiteThinOutline : undefined,
+      fill: fill(color.rgb().array()),
+      radius: 5,
+    }),
+    geometry: extractPointsFromLineString,
+  });
+const styleForPointsOfPolygon = (feature, selected, color) =>
+  new Style({
+    image: new Circle({
+      stroke: selected ? whiteThinOutline : undefined,
+      fill: fill(color.rgb().array()),
+      radius: 5,
+    }),
+    geometry: extractPointsFromPolygon,
+  });
+
 // TODO: cache the style somewhere?
 const styleForFeature = (feature, selected = false, isGeofence = false) => {
   const { color, label, labelStyle, type, filled } = feature;
@@ -106,8 +135,15 @@ const styleForFeature = (feature, selected = false, isGeofence = false) => {
           ),
         })
       );
+
+      if (feature.showPoints) {
+        // Show the vertices of the line string as well
+        styles.push(styleForPointsOfLineString(feature, selected, parsedColor));
+      }
+
       break;
 
+    // eslint-disable-next-line unicorn/no-useless-switch-case
     case FeatureType.POLYGON:
     // Fallthrough
 
@@ -136,6 +172,10 @@ const styleForFeature = (feature, selected = false, isGeofence = false) => {
           ),
         })
       );
+
+      if (feature.showPoints) {
+        styles.push(styleForPointsOfPolygon(feature, selected, parsedColor));
+      }
   }
 
   if (label && label.length > 0 && labelStyle !== LabelStyle.HIDDEN) {

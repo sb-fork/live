@@ -13,7 +13,6 @@ import {
   deepPurple,
   indigo,
   blue,
-  lightBlue,
   cyan,
   teal,
   green,
@@ -54,7 +53,7 @@ const pickerProps = {
     .map((hue) => shades.map((shade) => hue[shade]))
     .concat([['#000000', '#808080', '#FFFFFF']]),
   width: 490,
-  height: 192,
+  height: 176,
 };
 
 const SwatchesColorPicker = (props) => (

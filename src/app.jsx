@@ -16,6 +16,7 @@ import CornerRibbon from './components/CornerRibbon';
 import ServerConnectionManager from './components/ServerConnectionManager';
 import ShowFileWatcher from './views/show-control/ShowFileWatcher';
 
+import DetachedPanelManager from './features/detachable-panels/DetachedPanelManager';
 import DockDetailsDialog from './features/docks/DockDetailsDialog';
 import AppHotkeys from './features/hotkeys/AppHotkeys';
 import HotkeyDialog from './features/hotkeys/HotkeyDialog';
@@ -125,6 +126,8 @@ const App = ({ onFirstRender }) => (
         <PendingUAVIdOverlay />
       </div>
 
+      <DetachedPanelManager />
+
       <ServerConnectionManager />
 
       <ShowFileWatcher />
@@ -171,7 +174,7 @@ App.propTypes = {
  * Placeholder component to render when a panel is being dragged from the
  * sidebar to the workbench.
  */
-const DragProxy = () => <div />;
+const DragProxy = () => <div className='drag-proxy' />;
 
 /**
  * The context provider for the main application component and the

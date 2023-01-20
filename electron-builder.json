@@ -1,6 +1,6 @@
 {
   "appId": "com.collmot.skybrush.live",
-  "productName": "Skybrush Live",
+  "productName": "FlyAi Live",
 
   "artifactName": "${productName} ${version}.${ext}",
 

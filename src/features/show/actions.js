@@ -66,6 +66,8 @@ import {
   signOffOnOnboardPreflightChecksAt,
   _setOutdoorShowAltitudeReference,
 } from './slice';
+import { file } from 'jszip';
+import {Howl, Howler} from 'howler';
 
 /**
  * Thunk that approves the takeoff area arrangement with the current timestamp.
@@ -396,6 +398,30 @@ export function reloadCurrentShowFile() {
       return dispatch(loadShowFromFile(blob));
     }
   };
+}
+export function selecteda(file){
+  console.log(file)
+  var file = URL.createObjectURL(file); 
+  console.log(file)
+  const audio = new Audio(file);
+  // const filename = getAbsolutePathOfShowFile(getState());
+  // console.log(filename)
+  // const url = file.name
+  // console.log(url)
+  // let reader = new FileReader();
+  // reader.readAsText(file);
+  // reader.onload = function() {
+  //   console.log(reader.result);
+  // };
+
+  var sound = new Howl({
+    src: [file],
+    format: ['mp3']
+   });
+  
+   sound.play();
+  return (arg) => async (dispatch, getState) => {
+  }; 
 }
 
 /**

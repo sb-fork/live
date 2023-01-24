@@ -12,10 +12,15 @@ import { setCommandsAreBroadcast } from '~/features/mission/slice';
 import {
   setShowAuthorization,
   synchronizeShowSettings,
+  setMusicTimeoutId,
 } from '~/features/show/slice';
 import {
   countUAVsTakingOffAutomatically,
   isShowAuthorizedToStartLocally,
+  getMusicTimeoutId,
+  getMusicOffset,
+  getMusicFile,
+  getShowStartTime,
 } from '~/features/show/selectors';
 import { getSetupStageStatuses } from '~/features/show/stages';
 
@@ -25,6 +30,7 @@ import { getSetupStageStatuses } from '~/features/show/stages';
  * in automatic mode.
  */
 const AuthorizationButton = ({
+  mtimeout,
   isAuthorized,
   numUAVsTakingOffAutomatically,
   status,
@@ -67,6 +73,7 @@ AuthorizationButton.propTypes = {
   isAuthorized: PropTypes.bool,
   numUAVsTakingOffAutomatically: PropTypes.number,
   status: PropTypes.oneOf(Object.values(Status)),
+  mtimeout: PropTypes.number,
 };
 
 export default connect(
@@ -75,16 +82,28 @@ export default connect(
     isAuthorized: isShowAuthorizedToStartLocally(state),
     numUAVsTakingOffAutomatically: countUAVsTakingOffAutomatically(state),
     status: getSetupStageStatuses(state).authorization,
+    mtimeout: getMusicTimeoutId(state),
   }),
   // mapDispatchToProps
   {
     onClick: () => (dispatch, getState) => {
       const state = getState();
       const newAuthorizationState = !isShowAuthorizedToStartLocally(state);
+
       dispatch(setShowAuthorization(newAuthorizationState));
       dispatch(synchronizeShowSettings('toServer'));
       if (newAuthorizationState) {
         dispatch(setCommandsAreBroadcast(state));
+        var audio = new Audio(getMusicFile(state))
+        console.log(Date.now());
+        console.log(getShowStartTime(state))
+        console.log(getShowStartTime(state) + getMusicOffset(state));
+        if ((+getShowStartTime(state) + +getMusicOffset(state)) * 1000 - Date.now() >= 0)
+          dispatch(setMusicTimeoutId(setTimeout(()=>{audio.play()}, (+getShowStartTime(state) + +getMusicOffset(state)) * 1000 - Date.now())));
+      }
+      else{
+        clearTimeout(getMusicTimeoutId(state));
+        dispatch(setMusicTimeoutId(null));
       }
     },
   }

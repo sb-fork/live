@@ -21,7 +21,7 @@ import { Status } from '~/components/semantics';
 import {
   loadShowFromFile,
   reloadCurrentShowFile,
-  selecteda,
+  LoadMusicFile,
 } from '~/features/show/actions';
 import {
   clearLoadedShow,
@@ -33,9 +33,12 @@ import {
   getShowTitle,
   hasShowChangedExternallySinceLoaded,
   hasLoadedShowFile,
+  hasLoadedMusicFile,
   isLoadingShowFile,
+  getMusicFile,
+  getMusicFileName,
 } from '~/features/show/selectors';
-import { getSetupStageStatuses } from '~/features/show/stages';
+import { getSetupStageStatuses,getMusicFileStatus, } from '~/features/show/stages';
 import { truncate } from '~/utils/formatting';
 import { hasFeature } from '~/utils/configuration';
 import { file } from 'jszip';
@@ -76,9 +79,17 @@ const LoadMusicFromFileButton = ({
     // onSelected={onShowFileSelected}
     onSelected={selected}
   >
+    <StatusLight status={status} />
     <ListItemTextWithProgress
       primary={
-        'No show file loaded'
+        hasLoadedMusicFile ?
+        'Music file loaded':
+        'No music file loaded'
+      }
+      secondary={
+        hasLoadedMusicFile ?
+        title:
+        'Select or drop a show file here'
       }
     />
   </FileListItem>
@@ -104,11 +115,11 @@ export default connect(
   (state) => ({
     changedSinceLoaded: hasShowChangedExternallySinceLoaded(state),
     description: getShowDescription(state),
-    hasLoadedShowFile: hasLoadedShowFile(state),
+    hasLoadedMusicFile: hasLoadedMusicFile(state),
     loading: isLoadingShowFile(state),
     progress: getShowLoadingProgressPercentage(state),
-    status: getSetupStageStatuses(state).selectShowFile,
-    title: getShowTitle(state),
+    status: getMusicFileStatus(state),
+    title: getMusicFileName(state),
   }),
   // mapDispatchToProps
   {
@@ -116,6 +127,6 @@ export default connect(
     // onLoadShowFromCloud: openLoadShowFromCloudDialog,
     // onReloadShowFile: reloadCurrentShowFile,
     // onShowFileSelected: loadShowFromFile,
-    selected: selecteda,
+    selected: LoadMusicFile,
   }
 )(LoadMusicFromFileButton);

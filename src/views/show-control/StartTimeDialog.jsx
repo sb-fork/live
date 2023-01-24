@@ -8,7 +8,7 @@ import {
   setSeconds,
   startOfDay,
 } from 'date-fns';
-import { KeyboardDatePicker, KeyboardTimePicker, Select } from 'mui-rff';
+import { KeyboardDatePicker, KeyboardTimePicker, Select, TextField} from 'mui-rff';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Form } from 'react-final-form';
@@ -26,6 +26,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import AccessTime from '@material-ui/icons/AccessTime';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 import Header from '@skybrush/mui-components/lib/FormHeader';
 
@@ -37,6 +38,7 @@ import {
   setStartMethod,
   setStartTime,
   synchronizeShowSettings,
+  setMusicOffset,
 } from '~/features/show/slice';
 import { formatDurationHMS } from '~/utils/formatting';
 import { parseDurationHMS } from '~/utils/parsing';
@@ -130,7 +132,7 @@ const StartTimeForm = ({
                     variant='dialog'
                   />
                 </Box>
-                <Box flex={1}>
+                <Box flex={1} mr={1}>
                   <KeyboardTimePicker
                     ampm={false}
                     format='HH:mm:ss'
@@ -141,6 +143,16 @@ const StartTimeForm = ({
                     margin='dense'
                     name='utcTime'
                     variant='dialog'
+                  />
+                </Box>
+                <Box flex={1}>
+                <TextField
+                    fullWidth={false}
+                    name='moffset'
+                    label='Offset'
+                    margin='dense'
+                    type='number'
+                    variant='filled'
                   />
                 </Box>
               </>
@@ -236,8 +248,10 @@ const StartTimeDialog = ({
   onUpdateSettings,
   timeOnClock,
   utcTime,
+  moffset,
 }) => {
   const hasUtcStartTime = typeof utcTime === 'number';
+  const hasmoffset = typeof moffset === 'number';
   const hasStartTimeOnClock = typeof timeOnClock === 'number';
   const startDateTimeInUtc = hasUtcStartTime
     ? fromUnixTime(utcTime)
@@ -259,6 +273,7 @@ const StartTimeDialog = ({
             }),
             utcDate: startOfDay(startDateTimeInUtc),
             utcTime: startDateTimeInUtc,
+            moffset:0,
           }}
           onClose={onClose}
           onSubmit={onUpdateSettings}
@@ -276,6 +291,7 @@ StartTimeDialog.propTypes = {
   open: PropTypes.bool,
   timeOnClock: PropTypes.number,
   utcTime: PropTypes.number,
+  moffset: PropTypes.number,
 };
 
 StartTimeDialog.defaultProps = {
@@ -296,11 +312,12 @@ export default connect(
       dispatch(closeStartTimeDialog());
     },
 
-    onUpdateSettings({ clock, method, timeOnClock, utcDate, utcTime }) {
+    onUpdateSettings({ clock, method, timeOnClock, utcDate, utcTime, moffset }) {
       const useLocalTime =
         clock === LOCAL_TIME || clock === '' || typeof clock !== 'string';
 
       dispatch(setStartMethod(method));
+      dispatch(setMusicOffset(moffset));
 
       if (useLocalTime) {
         dispatch(

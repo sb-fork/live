@@ -65,10 +65,20 @@ import {
   signOffOnManualPreflightChecksAt,
   signOffOnOnboardPreflightChecksAt,
   _setOutdoorShowAltitudeReference,
+  setMusicFile,
+  setMusicOffset,
+  setMusicFileName,
 } from './slice';
 import { file } from 'jszip';
 import {Howl, Howler} from 'howler';
-
+import {
+  getShowClockReference,
+  getShowStartMethod,
+  getShowStartTime,
+  isShowAuthorizedToStartLocally,
+  getMusicFile,
+  getMusicOffset,
+} from './selectors';
 /**
  * Thunk that approves the takeoff area arrangement with the current timestamp.
  */
@@ -399,28 +409,21 @@ export function reloadCurrentShowFile() {
     }
   };
 }
-export function selecteda(file){
-  console.log(file)
-  var file = URL.createObjectURL(file); 
-  console.log(file)
-  const audio = new Audio(file);
-  // const filename = getAbsolutePathOfShowFile(getState());
-  // console.log(filename)
-  // const url = file.name
-  // console.log(url)
-  // let reader = new FileReader();
-  // reader.readAsText(file);
-  // reader.onload = function() {
-  //   console.log(reader.result);
-  // };
 
-  var sound = new Howl({
-    src: [file],
-    format: ['mp3']
-   });
-  
-   sound.play();
-  return (arg) => async (dispatch, getState) => {
+export function LoadMusicFile(file){
+  console.log(file)
+  const File = URL.createObjectURL(file); 
+  // console.log(File)
+  // const sound = new Howl({
+  //   src: [File],
+  //   format: ['mp3']
+  //  });
+  return async (dispatch, getState) => {
+    dispatch(setMusicFile(File));
+    dispatch(setMusicFileName(file.name));
+    console.log(getMusicFile(getState()));
+    console.log(getMusicOffset(getState()));
+    // setTimeout(()=>{sound.play()}, getShowStartTime(getState()) * 1000 - Date.now())
   }; 
 }
 

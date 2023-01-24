@@ -123,6 +123,21 @@ export const hasShowChangedExternallySinceLoaded = (state) =>
 export const isShowAuthorizedToStartLocally = (state) =>
   Boolean(state.show.start.authorized);
 
+export const getMusicFile = (state) =>
+  state.show.musicfile;
+
+export const getMusicOffset = (state) =>
+  state.show.musicoffset;
+
+export const getMusicTimeoutId = (state) =>
+  state.show.musictimeoutId;
+
+export const hasLoadedMusicFile = (state) =>
+  state.show.musicfile ? true : false;
+  
+export const getMusicFileName = (state) =>
+  state.show.musicfilename;
+
 /**
  * Returns whether the show has received human authorization to start _and_
  * this has been synchronized with the server.

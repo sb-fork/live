@@ -18,6 +18,7 @@ import EnvironmentButton from './EnvironmentButton';
 import GeofenceButton from './GeofenceButton';
 import LargeControlButtonGroup from './LargeControlButtonGroup';
 import LoadShowFromFileButton from './LoadShowFromFileButton';
+import LoadMusicFromFileButton from './LoadMusicFromFileButton';
 import ManualPreflightChecksButton from './ManualPreflightChecksButton';
 import OnboardPreflightChecksButton from './OnboardPreflightChecksButton';
 import ShowUploadDialogButton from './ShowUploadDialogButton';
@@ -66,6 +67,8 @@ const ShowControlPanelUpperSegment = ({ environmentType, isAuthorized }) => {
         <Box className={clsx(classes.root, classes.scrollable)}>
           <List dense>
             <LoadShowFromFileButton />
+            <LoadMusicFromFileButton />
+            
 
             <Divider />
 

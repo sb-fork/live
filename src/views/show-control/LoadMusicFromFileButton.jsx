@@ -82,7 +82,7 @@ const LoadMusicFromFileButton = ({
     <StatusLight status={status} />
     <ListItemTextWithProgress
       primary={
-        hasLoadedMusicFile ?
+        hasLoadedMusicFile && title ?
         'Music file loaded':
         'No music file loaded'
       }

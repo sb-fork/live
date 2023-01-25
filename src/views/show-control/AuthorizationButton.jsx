@@ -94,11 +94,12 @@ export default connect(
       dispatch(synchronizeShowSettings('toServer'));
       if (newAuthorizationState) {
         dispatch(setCommandsAreBroadcast(state));
+
         var audio = new Audio(getMusicFile(state))
         console.log(Date.now());
         console.log(getShowStartTime(state))
         console.log(getShowStartTime(state) + getMusicOffset(state));
-        if ((+getShowStartTime(state) + +getMusicOffset(state)) * 1000 - Date.now() >= 0)
+        if ((+getShowStartTime(state) + +getMusicOffset(state)) * 1000 - Date.now() >= 0 && getMusicFile(state))
           dispatch(setMusicTimeoutId(setTimeout(()=>{audio.play()}, (+getShowStartTime(state) + +getMusicOffset(state)) * 1000 - Date.now())));
       }
       else{

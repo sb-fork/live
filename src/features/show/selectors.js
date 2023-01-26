@@ -132,8 +132,8 @@ export const getMusicOffset = (state) =>
 export const getMusicTimeoutId = (state) =>
   state.show.musictimeoutId;
 
-export const hasLoadedMusicFile = (state) =>
-  state.show.musicfile ? true : false;
+export const hasLoadedMusicFile = (state) => 
+  Boolean(state.show.musicfile);
   
 export const getMusicFileName = (state) =>
   state.show.musicfilename;

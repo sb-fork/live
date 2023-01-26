@@ -21,6 +21,7 @@ import {
   getMusicOffset,
   getMusicFile,
   getShowStartTime,
+  hasLoadedMusicFile,
 } from '~/features/show/selectors';
 import { getSetupStageStatuses } from '~/features/show/stages';
 
@@ -99,7 +100,7 @@ export default connect(
         console.log(Date.now());
         console.log(getShowStartTime(state))
         console.log(getShowStartTime(state) + getMusicOffset(state));
-        if ((+getShowStartTime(state) + +getMusicOffset(state)) * 1000 - Date.now() >= 0 && getMusicFile(state))
+        if ((+getShowStartTime(state) + +getMusicOffset(state)) * 1000 - Date.now() >= 0 && hasLoadedMusicFile(state))
           dispatch(setMusicTimeoutId(setTimeout(()=>{audio.play()}, (+getShowStartTime(state) + +getMusicOffset(state)) * 1000 - Date.now())));
       }
       else{

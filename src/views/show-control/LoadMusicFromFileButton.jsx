@@ -61,6 +61,7 @@ const LoadMusicFromFileButton = ({
   changedSinceLoaded,
   description,
   hasLoadedShowFile,
+  hasLoadedMusicFile,
   loading,
   onClearLoadedShow,
   onLoadShowFromCloud,
@@ -82,7 +83,7 @@ const LoadMusicFromFileButton = ({
     <StatusLight status={status} />
     <ListItemTextWithProgress
       primary={
-        hasLoadedMusicFile && title ?
+        hasLoadedMusicFile?
         'Music file loaded':
         'No music file loaded'
       }
@@ -99,6 +100,7 @@ LoadMusicFromFileButton.propTypes = {
   changedSinceLoaded: PropTypes.bool,
   description: PropTypes.string,
   hasLoadedShowFile: PropTypes.bool,
+  hasLoadedMusicFile: PropTypes.bool,
   loading: PropTypes.bool,
   onClearLoadedShow: PropTypes.func,
   onLoadShowFromCloud: PropTypes.func,

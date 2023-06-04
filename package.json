@@ -1,7 +1,12 @@
 {
   "name": "@skybrush/live",
+<<<<<<< HEAD
   "productName": "Skybrush Live",
   "version": "2.7.2",
+=======
+  "productName": "FlyAi Live",
+  "version": "2.6.0",
+>>>>>>> flyai-design-latest
   "description": "Web frontend for a Skybrush server",
   "main": "launcher.bundle.js",
   "scripts": {
@@ -73,6 +78,7 @@
     "final-form-calculate": "^1.3.2",
     "formatcoords": "^1.1.3",
     "golden-layout": "^1.5.9",
+    "howler": "^2.2.3",
     "http-headers": "^3.0.2",
     "https-browserify": "^1.0.0",
     "hungarian-on3": "^0.3.1",

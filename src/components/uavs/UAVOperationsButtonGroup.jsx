@@ -4,6 +4,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 
 import Clear from '@material-ui/icons/Clear';
@@ -18,6 +20,7 @@ import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import Refresh from '@material-ui/icons/Refresh';
 import WbSunny from '@material-ui/icons/WbSunny';
+import SportsEsports from '@material-ui/icons/SportsEsports';
 
 import { TooltipWithContainerFromContext as Tooltip } from '~/containerContext';
 
@@ -34,7 +37,13 @@ import { createUAVOperationThunks } from '~/utils/messaging';
 import { bindActionCreators } from 'redux';
 import { getPreferredCommunicationChannelIndex } from '~/features/mission/selectors';
 import { getUAVIdList } from '~/features/uavs/selectors';
-
+import { getUAVById } from '~/features/uavs/selectors';
+import {
+  abbreviateGPSFixType,
+  getFlightModeLabel,
+  getSemanticsForFlightMode,
+  getSemanticsForGPSFixType,
+} from '~/model/enums';
 /**
  * Main toolbar for controlling the UAVs.
  */
@@ -49,10 +58,11 @@ const UAVOperationsButtonGroup = ({
   selectedUAVIds,
   size,
   startSeparator,
+  mode,
+  debugString,
 }) => {
   const isSelectionEmpty = isEmpty(selectedUAVIds) && !broadcast;
   const isSelectionSingle = selectedUAVIds.length === 1 && !broadcast;
-
   const {
     flashLight,
     holdPosition,
@@ -65,6 +75,10 @@ const UAVOperationsButtonGroup = ({
     turnMotorsOff,
     turnMotorsOn,
     wakeUp,
+    modeLoiter,
+    modeShow,
+    modeStab,
+    rc,
   } = bindActionCreators(
     createUAVOperationThunks({
       getTargetedUAVIds(state) {
@@ -86,7 +100,6 @@ const UAVOperationsButtonGroup = ({
     }),
     dispatch
   );
-
   const fontSize = size === 'small' ? 'small' : 'medium';
   const iconSize = size;
 
@@ -111,6 +124,14 @@ const UAVOperationsButtonGroup = ({
         </IconButton>
       </Tooltip>
     );
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
 
   return (
     <>
@@ -172,6 +193,46 @@ const UAVOperationsButtonGroup = ({
       )}
 
       {!hideSeparators && <ToolbarDivider orientation='vertical' />}
+      <Tooltip content='Change Mode'>
+      <div>
+      <Button
+        id="basic-button"
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+        variant="contained"
+        color="primary"
+      >
+        {mode}
+      </Button>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={modeShow}>Show</MenuItem>
+        <MenuItem onClick={modeLoiter}>Loiter</MenuItem>
+        <MenuItem onClick={modeStab}>Stabilize</MenuItem>
+      </Menu>
+    </div>
+      </Tooltip>
+      <Tooltip content='RC'>
+        <IconButton
+          disabled={isSelectionEmpty}
+          size={iconSize}
+          onClick={rc}
+        >
+          <SportsEsports
+            fontSize={fontSize}
+            htmlColor={isSelectionEmpty ? undefined : (debugString == 'rc_cancel' ? Colors.rc2 : Colors.rc1) }
+          />
+        </IconButton>
+      </Tooltip>
 
       <Tooltip content='Arm motors'>
         <IconButton
@@ -289,7 +350,8 @@ UAVOperationsButtonGroup.propTypes = {
 
 export default connect(
   // mapStateToProps
-  () => ({}),
+  // () => ({}),
+  (state, ownProps) => getUAVById(state, ownProps.selectedUAVIds[0]),
   // mapDispatchToProps
   (dispatch) => ({
     ...bindActionCreators(

@@ -727,7 +727,7 @@ const ServerConnectionManager = connect(
       // Let the user know that we are connected
       dispatch(
         showNotification({
-          message: 'Connected to Skybrush server',
+          message: 'Connected to FlyAI server',
           semantics: 'info',
         })
       );
@@ -747,6 +747,7 @@ const ServerConnectionManager = connect(
       );
     },
 
+<<<<<<< HEAD
     onConnectionTimeout(event) {
       dispatch(
         createCommonDisconnectionAndErrorHandlerThunk({
@@ -763,12 +764,71 @@ const ServerConnectionManager = connect(
           wasConnected: true,
         })
       );
+=======
+    onConnectionTimeout() {
+      dispatch(setCurrentServerConnectionState(ConnectionState.DISCONNECTED));
+      dispatch(showError('Timeout while connecting to FlyAI server'));
+    },
+
+    onDisconnected(url, reason) {
+      dispatch((dispatch, getState) => {
+        // reason = io client disconnect -- okay
+        // reason = io server disconnect -- okay
+        // reason = undefined -- okay
+        // reason = ping timeout -- will reconnect
+        dispatch(setCurrentServerConnectionState(ConnectionState.DISCONNECTED));
+
+        switch (reason) {
+          case 'io client disconnect':
+            dispatch(showNotification('Disconnected from FlyAI server'));
+            break;
+
+          case 'io server disconnect':
+            // Server does not close the connection without sending a SYS-CLOSE
+            // message so there is no need to show another
+            break;
+
+          case 'transport close':
+            dispatch(
+              showError('FlyAI server closed connection unexpectedly')
+            );
+            break;
+
+          case 'ping timeout':
+            dispatch(showError('Connection to FlyAI server lost'));
+            break;
+
+          default:
+            // Nothing to do
+            break;
+        }
+
+        // Determine whether Socket.IO will try to reconnect on its own
+        const willReconnect =
+          reason === 'ping timeout' || reason === 'transport close';
+        if (!willReconnect) {
+          // Make sure that our side is notified that the connection mechanism
+          // is not active any more. This has to be done only if we are not
+          // disconnecting due to switching to another server, so we need to
+          // compare the URL we received in the event with the current URL that
+          // we are trying to connect to.
+          const isSwichingServers = url !== getServerUrl(getState());
+          if (!isSwichingServers) {
+            dispatch(disconnectFromServer());
+          }
+        }
+
+        // Execute all the tasks that should be executed after disconnecting from
+        // the server
+        dispatch(executeTasksAfterDisconnection);
+      });
+>>>>>>> flyai-design-latest
     },
 
     onLocalServerError(message, wasRunning) {
       const baseMessage = wasRunning
-        ? 'Skybrush server died unexpectedly'
-        : 'Failed to launch local Skybrush server';
+        ? 'FlyAI server died unexpectedly'
+        : 'Failed to launch local FlyAI server';
       dispatch(setCurrentServerConnectionState(ConnectionState.DISCONNECTED));
       dispatch(showError(message ? `${baseMessage}: ${message}` : baseMessage));
     },

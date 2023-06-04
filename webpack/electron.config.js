@@ -18,7 +18,7 @@ const {
 const htmlWebPackPluginConfiguration = {
   meta: htmlMetaTags,
   template: path.resolve(projectRoot, 'index.html'),
-  title: 'Skybrush Live',
+  title: 'FlyAi Live',
 };
 
 const optimization = {};

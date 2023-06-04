@@ -31,8 +31,11 @@ import WeatherHeaderButton from '~/features/weather/WeatherHeaderButton';
 import { shouldSidebarBeShown } from '~/features/workbench/selectors';
 import { hasFeature } from '~/utils/configuration';
 
+
+import logo from '~/../assets/icons/flyai_logo_webside_2.png';
+
 const style = {
-  backgroundColor: '#333',
+  backgroundColor: '#000',
   flexGrow: 0,
   minHeight: 48,
 };
@@ -82,6 +85,7 @@ const Header = ({
 }) => (
   <div id='header' style={{ ...style, overflow: 'hidden' }}>
     <div id='header-inner' style={innerStyle}>
+<<<<<<< HEAD
       {showSidebar && (
         <Shapeshifter
           color='#999'
@@ -93,6 +97,26 @@ const Header = ({
 
       <PerspectiveBar />
       <Box pr={0.5} />
+=======
+      <Shapeshifter
+        color='#999'
+        style={{ cursor: 'pointer' }}
+        shape={isSidebarOpen ? 'close' : 'menu'}
+        onClick={toggleSidebar}
+      />
+      <Box // FlyAI logo
+        component="img"
+        sx={{
+          height: 50,
+          width: 100,
+        }}
+        src={logo}
+      >
+      </Box>
+      <Box flexGrow={1} flexShrink={1}>
+        {/* spacer */}
+      </Box>
+>>>>>>> flyai-design-latest
       <UAVStatusSummary />
       <hr />
       <AltitudeSummaryHeaderButton />

@@ -29,7 +29,7 @@ const plugins = [
     meta: htmlMetaTags,
     template: path.resolve(projectRoot, 'index.html'),
     title:
-      'Skybrush Live | The Next-generation Drone Light Show Software Suite',
+      'FlyAI Live | The Next-generation Drone Light Show Software Suite',
   }),
 ];
 

@@ -31,6 +31,11 @@ const { actions, reducer } = createSlice({
     changedSinceLoaded: false,
     lastLoadAttemptFailed: false,
 
+    musicfile: null,
+    musicfilename: null,
+    musicoffset: null,
+    musictimeoutId: null,
+
     environment: {
       editing: false,
       outdoor: {
@@ -257,6 +262,22 @@ const { actions, reducer } = createSlice({
       state.lastLoadAttemptFailed = Boolean(action.payload);
     },
 
+    setMusicFile(state, action) {
+      state.musicfile = action.payload;
+    },
+
+    setMusicFileName(state, action) {
+      state.musicfilename = action.payload;
+    },
+
+    setMusicOffset(state, action) {
+      state.musicoffset = action.payload;
+    },
+
+    setMusicTimeoutId(state, action) {
+      state.musictimeoutId = action.payload;
+    },
+
     _setOutdoorShowAltitudeReference(state, action) {
       const { payload } = action;
 
@@ -405,6 +426,10 @@ export const {
   revokeTakeoffAreaApproval,
   setEnvironmentType,
   setLastLoadingAttemptFailed,
+  setMusicFile,
+  setMusicOffset,
+  setMusicTimeoutId,
+  setMusicFileName,
   _setOutdoorShowAltitudeReference,
   setOutdoorShowOrientation,
   setOutdoorShowOrigin,

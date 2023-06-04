@@ -42,6 +42,7 @@ const useStyles = makeStyles(
  * Sidebar of the UAV details dialog.
  */
 const UAVDetailsDialogSidebar = ({ uavId }) => {
+  console.log(uavId)
   const classes = useStyles();
   return (
     <Box className={classes.root}>

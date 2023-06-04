@@ -207,6 +207,39 @@ export const turnMotorsOnForUAVs = performMassOperation({
   }),
 });
 
+export const changeModeLoiter = performMassOperation({
+  type: 'UAV-MODE',
+  name: 'Mode command',
+  mapper: (options) => ({
+    ...options,
+    num: 5,
+  }),
+});
+
+export const changeModeShow = performMassOperation({
+  type: 'UAV-MODE',
+  name: 'Mode command',
+  mapper: (options) => ({
+    ...options,
+    num: 127,
+  }),
+});
+
+export const changeModeStab = performMassOperation({
+  type: 'UAV-MODE',
+  name: 'Mode command',
+  mapper: (options) => ({
+    ...options,
+    num: 0,
+  }),
+});
+
+export const sendRC = performMassOperation({
+  type: 'UAV-RC',
+  name: 'RC command',
+});
+
+
 // moveUAVs() not in this map because it requires extra args
 const OPERATION_MAP = {
   flashLight: flashLightOnUAVs,
@@ -220,6 +253,10 @@ const OPERATION_MAP = {
   turnMotorsOff: turnMotorsOffForUAVs,
   turnMotorsOn: turnMotorsOnForUAVs,
   wakeUp: wakeUpUAVs,
+  modeLoiter: changeModeLoiter,
+  modeShow: changeModeShow,
+  modeStab: changeModeStab,
+  rc: sendRC,
 };
 
 /**

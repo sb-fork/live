@@ -33,7 +33,7 @@ import { isSidebarOpen } from './selectors';
 const SIDEBAR_OPEN_WIDTH = 180; /* 160px is enough for most platforms, but apparently Windows needs 180px because of the scrollbar */
 
 const style = {
-  backgroundColor: '#333',
+  backgroundColor: '#000',
   boxShadow: 'rgba(0, 0, 0, 0.3) -9px -3px 6px -6px inset',
   display: 'flex',
   flexFlow: 'column nowrap',

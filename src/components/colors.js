@@ -16,6 +16,9 @@ export const Colors = {
   plannedTrajectory: '#08f',
 
   positionHold: yellow.A400,
+  rc1: '#00b0ff',
+  rc2: '#616161',
+
 };
 
 const convertColorsToRGBTuples = (c) =>

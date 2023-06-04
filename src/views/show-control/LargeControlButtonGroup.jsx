@@ -15,6 +15,7 @@ import FlightLand from '@material-ui/icons/FlightLand';
 import PositionHold from '@material-ui/icons/Flag';
 import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import PlayArrow from '@material-ui/icons/PlayArrow';
+import SportsEsports from '@material-ui/icons/SportsEsports';
 
 import Colors from '~/components/colors';
 import ColoredButton from '~/components/ColoredButton';
@@ -82,7 +83,16 @@ const LargeControlButtonGroup = ({
           </Typography>
         </Box>
       </Box>
-      <Box display='flex' flexDirection='row' flex={1}>
+      <Box display='flex' flexDirection='row' flex={1}>  
+        <ColoredButton
+          className={classes.button}
+          color={Colors.success}
+          icon={<SportsEsports fontSize='inherit' />}
+          onClick={uavActions.rc}
+        >
+          {broadcast ? 'Arm all' : 'Arm'}
+        </ColoredButton>
+
         <ColoredButton
           className={classes.button}
           color={Colors.success}

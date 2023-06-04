@@ -26,8 +26,9 @@ export const Source = {
   MAPTILER: {
     BASIC: 'maptiler.basic',
     HYBRID: 'maptiler.hybrid',
-    SATELLITE: 'maptiler.satellite',
     STREETS: 'maptiler.streets',
+    TOPO: 'maptiler.topo',
+    OSM: 'maptiler.osm',
   },
   NEXTZEN: 'nextzen',
   OSM: 'osm',
@@ -41,7 +42,7 @@ export const Source = {
 /**
  * Constant containing all the sources in the order preferred on the UI.
  */
-export const Sources = [Source.OSM, Source.STAMEN.TERRAIN];
+export const Sources = [Source.OSM];
 
 // We add Mapbox, Maptiler, Bing Maps and Google Maps map sources only if we
 // have at least a default API key for them. This might change in the future.
@@ -54,8 +55,10 @@ if (APIKeys.MAPBOX) {
 if (APIKeys.MAPTILER) {
   Sources.push(
     Source.MAPTILER.BASIC,
-    Source.MAPTILER.SATELLITE,
-    Source.MAPTILER.HYBRID
+    Source.MAPTILER.HYBRID,
+    Source.MAPTILER.OSM,
+    Source.MAPTILER.TOPO,
+    Source.MAPTILER.STREETS
   );
 }
 
@@ -123,19 +126,23 @@ const visualRepresentationsForSources = {
     attributions: attributions.mapbox,
   },
   [Source.MAPTILER.BASIC]: {
-    label: 'Maptiler',
+    label: 'Maptiler Basic',
     attributions: attributions.maptiler,
   },
   [Source.MAPTILER.HYBRID]: {
-    label: 'Maptiler hybrid',
+    label: 'Maptiler Satellite hybrid',
     attributions: attributions.maptiler,
   },
-  [Source.MAPTILER.SATELLITE]: {
-    label: 'Maptiler satellite',
+  [Source.MAPTILER.TOPO]: {
+    label: 'Maptiler Topo',
+    attributions: attributions.maptiler,
+  },
+  [Source.MAPTILER.OSM]: {
+    label: 'Maptiler OpenStreetMap',
     attributions: attributions.maptiler,
   },
   [Source.MAPTILER.STREETS]: {
-    label: 'Maptiler streets',
+    label: 'Maptiler Streets',
     attributions: attributions.maptiler,
   },
   [Source.NEXTZEN]: { label: 'Nextzen', attributions: attributions.nextzen },

@@ -221,3 +221,6 @@ export const getSetupStageStatuses = (state) => {
 
   return result;
 };
+
+export const getMusicFileStatus = (state) =>
+  state.show.musicfile ? Status.SUCCESS : Status.OFF;

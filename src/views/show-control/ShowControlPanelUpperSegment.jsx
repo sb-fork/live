@@ -26,15 +26,9 @@ import MultiPagePanel, { Page } from '~/components/MultiPagePanel';
  * Panel that shows the widgets that are needed to load and configure a drone
  * show.
  */
-const ShowControlPanelUpperSegment = ({ environmentType, isAuthorized }) => (
-  <MultiPagePanel flex={1} selectedPage={isAuthorized ? 'execution' : 'setup'}>
-    <Page scrollable id='setup'>
-      <List dense>
-        <LoadShowFromFileButton />
+ const ShowControlPanelUpperSegment = ({ environmentType, isAuthorized }) => {
+  const classes = useStyles();
 
-<<<<<<< HEAD
-        <Divider />
-=======
   return (
     <Box flex={1} position='relative'>
       <FadeAndSlide
@@ -48,28 +42,43 @@ const ShowControlPanelUpperSegment = ({ environmentType, isAuthorized }) => (
             <LoadShowFromFileButton />
             <LoadMusicFromFileButton />
             
->>>>>>> flyai-design-latest
 
-        <EnvironmentButton />
-        <TakeoffAreaButton />
-        {environmentType === 'outdoor' && <GeofenceButton />}
-        <ShowUploadDialogButton />
+            <Divider />
 
-        <Divider />
+            <EnvironmentButton />
+            <TakeoffAreaButton />
+            {environmentType === 'outdoor' && <GeofenceButton />}
+            <ShowUploadDialogButton />
 
-        <OnboardPreflightChecksButton />
-        <ManualPreflightChecksButton />
+            <Divider />
 
-        <Divider />
+            <OnboardPreflightChecksButton />
+            <ManualPreflightChecksButton />
 
-        <StartTimeButton />
-      </List>
-    </Page>
-    <Page id='execution' display='flex' flexDirection='column'>
-      <LargeControlButtonGroup />
-    </Page>
-  </MultiPagePanel>
-);
+            <Divider />
+
+            <StartTimeButton />
+          </List>
+        </Box>
+      </FadeAndSlide>
+
+      <FadeAndSlide
+        mountOnEnter
+        unmountOnExit
+        in={isAuthorized}
+        direction='left'
+      >
+        <Box
+          className={clsx(classes.root)}
+          display='flex'
+          flexDirection='column'
+        >
+          <LargeControlButtonGroup />
+        </Box>
+      </FadeAndSlide>
+    </Box>
+  );
+};
 
 ShowControlPanelUpperSegment.propTypes = {
   environmentType: PropTypes.oneOf(['indoor', 'outdoor']),

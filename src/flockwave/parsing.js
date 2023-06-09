@@ -41,12 +41,8 @@ const MESSAGES_WITH_RECEIPTS = {
   'UAV-SIGNAL': true,
   'UAV-TAKEOFF': true,
   'UAV-TEST': true,
-<<<<<<< HEAD
-  'UAV-WAKEUP': true,
-=======
   'UAV-MODE': true,
   'UAV-RC': true,
->>>>>>> flyai-design-latest
 };
 
 /**

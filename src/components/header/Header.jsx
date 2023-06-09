@@ -85,19 +85,6 @@ const Header = ({
 }) => (
   <div id='header' style={{ ...style, overflow: 'hidden' }}>
     <div id='header-inner' style={innerStyle}>
-<<<<<<< HEAD
-      {showSidebar && (
-        <Shapeshifter
-          color='#999'
-          style={{ cursor: 'pointer' }}
-          shape={isSidebarOpen ? 'close' : 'menu'}
-          onClick={toggleSidebar}
-        />
-      )}
-
-      <PerspectiveBar />
-      <Box pr={0.5} />
-=======
       <Shapeshifter
         color='#999'
         style={{ cursor: 'pointer' }}
@@ -116,7 +103,6 @@ const Header = ({
       <Box flexGrow={1} flexShrink={1}>
         {/* spacer */}
       </Box>
->>>>>>> flyai-design-latest
       <UAVStatusSummary />
       <hr />
       <AltitudeSummaryHeaderButton />

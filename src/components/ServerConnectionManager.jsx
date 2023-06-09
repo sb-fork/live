@@ -747,24 +747,6 @@ const ServerConnectionManager = connect(
       );
     },
 
-<<<<<<< HEAD
-    onConnectionTimeout(event) {
-      dispatch(
-        createCommonDisconnectionAndErrorHandlerThunk({
-          ...event,
-          reason: 'connection timeout',
-        })
-      );
-    },
-
-    onDisconnected(event) {
-      dispatch(
-        createCommonDisconnectionAndErrorHandlerThunk({
-          ...event,
-          wasConnected: true,
-        })
-      );
-=======
     onConnectionTimeout() {
       dispatch(setCurrentServerConnectionState(ConnectionState.DISCONNECTED));
       dispatch(showError('Timeout while connecting to FlyAI server'));
@@ -822,7 +804,6 @@ const ServerConnectionManager = connect(
         // the server
         dispatch(executeTasksAfterDisconnection);
       });
->>>>>>> flyai-design-latest
     },
 
     onLocalServerError(message, wasRunning) {

@@ -1,12 +1,7 @@
 {
   "name": "@skybrush/live",
-<<<<<<< HEAD
-  "productName": "Skybrush Live",
-  "version": "2.7.2",
-=======
   "productName": "FlyAi Live",
   "version": "2.6.0",
->>>>>>> flyai-design-latest
   "description": "Web frontend for a Skybrush server",
   "main": "launcher.bundle.js",
   "scripts": {

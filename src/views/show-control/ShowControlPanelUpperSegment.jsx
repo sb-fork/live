@@ -1,9 +1,13 @@
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
+import { makeStyles } from '@material-ui/core/styles';
+import FadeAndSlide from '~/components/transitions/FadeAndSlide';
 
 import {
   getShowEnvironmentType,
@@ -21,7 +25,29 @@ import ShowUploadDialogButton from './ShowUploadDialogButton';
 import StartTimeButton from './StartTimeButton';
 import TakeoffAreaButton from './TakeoffAreaButton';
 import MultiPagePanel, { Page } from '~/components/MultiPagePanel';
+const useStyles = makeStyles(
+  (theme) => ({
+    root: {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0,
+    },
 
+    scrollable: {
+      overflow: 'auto',
+    },
+
+    button: {
+      flex: 1,
+      margin: theme.spacing(1),
+    },
+  }),
+  {
+    name: 'ShowControlPanelUpperSegment',
+  }
+);
 /**
  * Panel that shows the widgets that are needed to load and configure a drone
  * show.

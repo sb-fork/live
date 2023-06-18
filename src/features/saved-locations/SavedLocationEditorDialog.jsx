@@ -215,7 +215,7 @@ const SavedLocationEditorDialog = connect(
       };
     },
     onSubmit(data) {
-      const currentLocation = structuredClone(data);
+      const currentLocation = JSON.parse(JSON.stringify(data));
 
       currentLocation.center.lon = Number(currentLocation.center.lon);
       currentLocation.center.lat = Number(currentLocation.center.lat);
